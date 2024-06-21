@@ -4,38 +4,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    
+
+    <!-- Custom CSS file -->
+    <link rel="stylesheet" href="./assets/style.css">
+
     <title>Weather Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 <body>
-    <header class="container-fluid text-center text-white bg-dark p-4">
+    <!-- Header section -->
+    <header class="container-fluid text-center text-white bg-dark p-4" id="header">
         <h1>Weather Dashboard</h1>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 bg-light">
+            <!-- Sidebar section -->
+            <div class="col-lg-3">
                 <h5 class="mt-1">Search for a City:</h5>
-                <div class="input-group mb-3">
-                    <input id="enter-city" type="text" class="form-control" placeholder="Enter a city" aria-label="Enter a city">
+                <!-- Search input and button -->
+                <!-- Search input and button -->
+                <form id="search-form">
+                    <div class="input-group mb-3">
+                        <input id="enter-city" type="text" class="form-control" placeholder="Enter a city" aria-label="Enter a city">
+                        <div class="input-group-append">
+                        </div>
+
+                        <!-- Search Button -->
+                        <button class="btn btn-outline-info btn-block" type="button" id="search-button">Search</button>
+
                     </div>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" id="search-button">
-                            <i class="fas fa-search"></i> Search
-                        </button>
+                </form>
+
+                <!-- History form -->
+                <form id="history"></form>
+                <!-- Clear history button -->
+                <button class="btn btn-outline-info" type="button" id="clear-history">Clear history</button>
+            </div>
+
+            <!-- Main content section -->
+            <div class="col-lg-9" id="main-weather">
+                <div class="row mr-0">
+                    <!-- Today's weather card -->
+                    <div class="col-lg-11 card m-3 d-none" id="today-weather">
+                        <div class="card-body">
+                            <h3 id="city-name" class="city-name align-middle"></h3>
+                            <img id="current-pic" alt="">
+                            <p id="temperature"></p>
+                            <p id="humidity"></p>
+                            <p id="wind-speed"></p>
+                            <p id="UV-index"></p>
+                        </div>
                     </div>
+                </div>
+                <div class="row d-none" id="fiveday-header">
+                    <div class="col-12">
+                        <h3>5-Day Forecast</h3>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row">
+                        <!-- Forecast cards -->
+                        <div class="col-md-2 forecast bg-dark text-white mx-2 rounded" id="sm-box"></div>
+                        <div class="col-md-2 forecast bg-dark text-white mx-2 rounded" id="sm-box"></div>
+                        <div class="col-md-2 forecast bg-dark text-white mx-2 rounded" id="sm-box"></div>
+                        <div class="col-md-2 forecast bg-dark text-white mx-2 rounded" id="sm-box"></div>
+                        <div class="col-md-2 forecast bg-dark text-white mx-2 rounded" id="sm-box"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- External JavaScript libraries -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Custom JavaScript file -->
+    <script src="./assets/script.js"></script>
 </body>
 
 </html>
