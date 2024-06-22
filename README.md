@@ -4,6 +4,8 @@
 ## Description
 An application that allows the user to enter cities to recieve weather infomation about the day and also show a 5-day forecast. It will then create a search hitory with all the city's the user has searched (with a clear button) 
 
+![w-dashboard-web-img](https://github.com/So-Emily/Weather-Dashboard/assets/10500315/63abb5a4-424c-4cc3-8855-fb037780219b)
+
 ## Table of Contents
 - [Deploying](#deploying)
 - [Contributions](#contributions)
