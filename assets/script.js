@@ -107,6 +107,10 @@ function initPage() {
                             forecastTempEl.innerHTML = "Temp: " + k2f(response.data.list[forecastIndex].main.temp) + " &#176F";
                             forecastEls[i].append(forecastTempEl);
 
+                            const forecastWindEl = document.createElement("p");
+                            forecastWindEl.innerHTML = "Wind: " + response.data.list[forecastIndex].wind.speed + " MPH";
+                            forecastEls[i].append(forecastWindEl);
+                            
                             const forecastHumidityEl = document.createElement("p");
                             forecastHumidityEl.innerHTML = "Humidity: " + response.data.list[forecastIndex].main.humidity + "%";
                             forecastEls[i].append(forecastHumidityEl);
@@ -135,9 +139,9 @@ function initPage() {
     function k2f(K) {
         return Math.floor((K - 273.15) * 1.8 + 32);
     }
-    
+
     // Functions to make the search history never have duplicates
-    // Step 1 & 3: Load and Save Search History
+    // Load and Save Search History
     function loadAndDeduplicateSearchHistory() {
         // Load search history from localStorage or initialize as empty array if not present
         searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
@@ -147,7 +151,7 @@ function initPage() {
         renderSearchHistory();
     }
 
-    // Step 2: Deduplicate Function
+    // Deduplicate Function
     function deduplicateArray(array) {
         return [...new Set(array)];
     }
