@@ -26,6 +26,9 @@
     margin-top: 18px;
 }
 
-#history {
-    margin-top: 18px;
+/* Style the forecast Boxes */
+#sm-box {
+    margin: 14px;
+    max-width: 90%;
+    text-align: center; 
 }

@@ -1,6 +1,6 @@
 // Function to initialize the page
 function initPage() {
-    // Get references to HTML elements
+    // ALL THE VARIABLES or References to the HTML elements in the DOM
     const cityEl = document.getElementById("enter-city"); // Input field for city name
     const searchEl = document.getElementById("search-button"); // Search button
     const clearEl = document.getElementById("clear-history"); // Clear history button
@@ -23,6 +23,7 @@ function initPage() {
     // Event listener for search form submission - press enter to search
     document.getElementById('search-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the form from being submitted normally
+
     // Trigger the search button click event
     document.getElementById('search-button').click();
     });
@@ -83,23 +84,29 @@ function initPage() {
                         // Display forecast for the next 5 days
                         const forecastEls = document.querySelectorAll(".forecast");
                         for (i = 0; i < forecastEls.length; i++) {
+                            // Clear old forecast data
                             forecastEls[i].innerHTML = "";
+                            
                             const forecastIndex = i * 8 + 4;
                             const forecastDate = new Date(response.data.list[forecastIndex].dt * 1000);
                             const forecastDay = forecastDate.getDate();
                             const forecastMonth = forecastDate.getMonth() + 1;
                             const forecastYear = forecastDate.getFullYear();
+                            
                             const forecastDateEl = document.createElement("p");
                             forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
                             forecastDateEl.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
                             forecastEls[i].append(forecastDateEl);
+                            
                             const forecastWeatherEl = document.createElement("img");
                             forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png");
                             forecastWeatherEl.setAttribute("alt", response.data.list[forecastIndex].weather[0].description);
                             forecastEls[i].append(forecastWeatherEl);
+
                             const forecastTempEl = document.createElement("p");
                             forecastTempEl.innerHTML = "Temp: " + k2f(response.data.list[forecastIndex].main.temp) + " &#176F";
                             forecastEls[i].append(forecastTempEl);
+
                             const forecastHumidityEl = document.createElement("p");
                             forecastHumidityEl.innerHTML = "Humidity: " + response.data.list[forecastIndex].main.humidity + "%";
                             forecastEls[i].append(forecastHumidityEl);
@@ -114,7 +121,7 @@ function initPage() {
         getWeather(searchTerm);
         searchHistory.push(searchTerm);
         localStorage.setItem("search", JSON.stringify(searchHistory));
-        renderSearchHistory();
+        addCityToSearchHistory(searchTerm);
     })
 
     // Event listener for clear history button
@@ -128,6 +135,38 @@ function initPage() {
     function k2f(K) {
         return Math.floor((K - 273.15) * 1.8 + 32);
     }
+    
+    // Functions to make the search history never have duplicates
+    // Step 1 & 3: Load and Save Search History
+    function loadAndDeduplicateSearchHistory() {
+        // Load search history from localStorage or initialize as empty array if not present
+        searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+        // Deduplicate
+        searchHistory = deduplicateArray(searchHistory);
+        // Render the deduplicated search history
+        renderSearchHistory();
+    }
+
+    // Step 2: Deduplicate Function
+    function deduplicateArray(array) {
+        return [...new Set(array)];
+    }
+
+    // Modified addCityToSearchHistory to include localStorage update
+    function addCityToSearchHistory(city) {
+        if (!searchHistory.includes(city)) {
+            searchHistory.push(city);
+        } else {
+            searchHistory = searchHistory.filter(item => item !== city);
+            searchHistory.push(city);
+        }
+        // Save the updated and deduplicated search history to localStorage
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+        renderSearchHistory();
+    }
+
+    // Initialization Function
+    document.addEventListener("DOMContentLoaded", loadAndDeduplicateSearchHistory);
 
     // Function to render search history
     function renderSearchHistory() {
